@@ -6,6 +6,8 @@ import Ordenes from "./components/paginas/Ordenes";
 import Menu from "./components/paginas/Menu";
 import NuevoPlatillo from "./components/paginas/NuevoPlatillo";
 import Sidebar from "./components/ui/Sidebar";
+import OrdenesCompletadas from "./components/paginas/OrdenesCompletadas";
+import Reportes from "./components/paginas/Reportes";
 
 function App() {
   return (
@@ -22,6 +24,11 @@ function App() {
             <Route path="/" element={<Ordenes />}></Route>
             <Route path="/menu" element={<Menu />}></Route>
             <Route path="/nuevo-platillo" element={<NuevoPlatillo />}></Route>
+            <Route
+              path="/ordenes-completadas"
+              element={<OrdenesCompletadas />}
+            ></Route>
+            <Route path="/reportes" element={<Reportes />}></Route>
           </Routes>
         </div>
       </div>

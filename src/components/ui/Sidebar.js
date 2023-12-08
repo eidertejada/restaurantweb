@@ -22,9 +22,10 @@ const Sidebar = () => {
                 ? "text-yellow-400 p-1 block hover:bg-yellow-500 hover:text-gray-900"
                 : "text-gray-400 p-1 block hover:bg-yellow-500 hover:text-gray-900"
             }
-            to="/"
+            end
+            to="/menu"
           >
-            Ordenes
+            Menú
           </NavLink>
           <NavLink
             className={({ isActive }) =>
@@ -32,10 +33,30 @@ const Sidebar = () => {
                 ? "text-yellow-400 p-1 block hover:bg-yellow-500 hover:text-gray-900"
                 : "text-gray-400 p-1 block hover:bg-yellow-500 hover:text-gray-900"
             }
-            end
-            to="/menu"
+            to="/"
           >
-            Menú
+            Ordenes
+          </NavLink>
+
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? "text-yellow-400 p-1 block hover:bg-yellow-500 hover:text-gray-900"
+                : "text-gray-400 p-1 block hover:bg-yellow-500 hover:text-gray-900"
+            }
+            to="/ordenes-completadas"
+          >
+            Ordenes Completadas
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? "text-yellow-400 p-1 block hover:bg-yellow-500 hover:text-gray-900"
+                : "text-gray-400 p-1 block hover:bg-yellow-500 hover:text-gray-900"
+            }
+            to="/reportes"
+          >
+            Reportes
           </NavLink>
         </nav>
       </div>
