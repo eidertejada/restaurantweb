@@ -35,9 +35,13 @@ const Ordenes = () => {
       <h1 className="text-3xl font-light mb-4">Ordenes</h1>
 
       <div className="sm:flex sm:flex-wrap -mx-3">
-        {ordenes.map((orden) => (
-          <Orden key={orden.id} orden={orden} />
-        ))}
+        {ordenes.length > 0 &&
+          ordenes.map((orden) => <Orden key={orden.id} orden={orden} />)}
+        {ordenes.length === 0 && (
+          <h1 className="text-center text-2xl font-semibold m-3">
+            No hay ordenes activas
+          </h1>
+        )}
       </div>
     </>
   );
