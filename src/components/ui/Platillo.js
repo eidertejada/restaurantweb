@@ -1,15 +1,48 @@
 import React, { useContext, useRef } from "react";
 import { FirebaseContext } from "../../firebase";
+import Swal from "sweetalert2";
 
 const Platillo = ({ platillo }) => {
+  const { nombre, imagen, existencia, categoria, precio, descripcion, id } =
+    platillo;
   // Existencia ref para acceder al valor directamente
   const existenciaRef = useRef(platillo.existencia);
+
+  // Eliminar Platillo
+  const eliminarPlatillo = (id) => {
+    try {
+      firebase.db.collection("productos").doc(id).delete();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const alerta = () => {
+    Swal.fire({
+      title: "Estás seguro que quieres eliminar el producto?",
+      text: "Luego de eliminarlo, no podrás recuperarlo!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#5cb85c",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, Eliminar!",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        eliminarPlatillo(id);
+        Swal.fire({
+          title: "Producto Eliminado!",
+          text: "Tu producto ha sido eliminado.",
+          icon: "success",
+        });
+      }
+    });
+  };
 
   // context de firebase para cambios en la BD
   const { firebase } = useContext(FirebaseContext);
 
-  const { nombre, imagen, existencia, categoria, precio, descripcion, id } =
-    platillo;
+  // Eliminar Orden
 
   // Modificar el estado del platillo en firebase
   const actualizarDisponibilidad = () => {
@@ -41,6 +74,15 @@ const Platillo = ({ platillo }) => {
                   <option value="true">Disponible</option>
                   <option value="false">No Disponible</option>
                 </select>
+                <button
+                  type="button"
+                  className="bg-red-600 hover:bg-red-500 w-full mt-5 p-2 text-white uppercase font-bold"
+                  onClick={() => {
+                    alerta();
+                  }}
+                >
+                  Eliminar Producto
+                </button>
               </label>
             </div>
           </div>
