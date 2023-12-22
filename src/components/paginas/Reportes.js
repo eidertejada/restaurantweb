@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import ComparacionDeVentas from "../ui/ComparaciónDeVentas";
 import ProductoMasVendido from "../ui/ProductoMasVendido";
 import { FirebaseContext } from "../../firebase";
+import SelectComponent from "../ui/SelectComponent";
+import DateRangePicker from "../ui/DateRangePicker";
+import ProductInputForm from "../ui/ProductInputForm";
 
 const Reportes = () => {
   const { firebase } = useContext(FirebaseContext);
@@ -36,7 +38,7 @@ const Reportes = () => {
     <>
       <h1 className="text-3xl font-light mb-4">Reportes</h1>
       <ProductoMasVendido ordenes={ordenes} />
-      {/* <ComparacionDeVentas ordenes={ordenes} /> */}
+      <ProductInputForm ordenes={ordenes} />
     </>
   );
 };

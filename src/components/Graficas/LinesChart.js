@@ -1,6 +1,8 @@
 import React from "react";
+import { traerProducto } from "../Funciones/traerProducto";
 import {
   Chart as ChartJS,
+  ArcElement,
   CategoryScale,
   LinearScale,
   PointElement,
@@ -10,7 +12,7 @@ import {
   Legend,
   Filler,
 } from "chart.js";
-import { Line } from "react-chartjs-2";
+import { Line, Doughnut } from "react-chartjs-2";
 /* import faker from "faker"; */
 
 ChartJS.register(
@@ -21,70 +23,31 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  Filler
+  Filler,
+  ArcElement
 );
 
-let beneficiosYearOne = [0, 6, 20, 15, 25, -13, 25, 40, 5, 17, -12, 12];
-let beneficiosYearTwo = [24, 12, 14, 32, 13, 3, 5, 13, 8, 11, 2, -12];
-let meses = [
-  "Enero",
-  "Febrero",
-  "Marzo",
-  "Abril",
-  "Mayo",
-  "Junio",
-  "Julio",
-  "Agosto",
-  "Septiembre",
-  "Octubre",
-  "Noviembre",
-  "Diciembre",
-];
-
-let midata = {
-  labels: meses,
-  datasets: [
-    // Cada una de las lineas del grafico
-    {
-      label: "Primer Año",
-      data: beneficiosYearOne,
-      tension: 0.5,
-      fill: true,
-      borderColor: "rgb(255, 99, 132)",
-      /* backgroundColor: "rgba(255, 99, 132, 0.5)", */
-      pointRadius: 5,
-      pointBorderColor: "rgba(255, 99, 132)",
-      pointBackgroundColor: "rgba(255, 99, 132)",
-    },
-    {
-      label: "Segundo Año",
-      data: beneficiosYearTwo,
-      tension: 0.5,
-      fill: true,
-      borderColor: "rgb(76, 0, 255)",
-      /* backgroundColor: "rgba(76, 0, 255, 0.53)", */
-      pointRadius: 5,
-      pointBorderColor: "rgb(76, 0, 255)",
-      pointBackgroundColor: "rgb(76, 0, 255)",
-    },
-  ],
-};
-
-let options = {
-  scales: {
-    y: {},
-    x: {
-      ticks: {
-        color: "blue",
+export default function LinesChart({ itemOne, itemTwo }) {
+  const data = {
+    labels: [`Producto 1: ${itemOne.nombre}`, `Producto 2: ${itemTwo.nombre}`],
+    datasets: [
+      {
+        label: "Cantidad Vendida",
+        data: [itemOne.cantidad, itemTwo.cantidad],
+        backgroundColor: ["#22c55e", "#ef4444"],
+        borderColor: ["green", "#b91c1c"],
       },
-    },
-  },
-  plugins: {
-    legend: {
-      display: true,
-    },
-  },
-};
-export default function LinesChart() {
-  return <Line data={midata} options={options} />;
+    ],
+  };
+
+  const options = {};
+
+  console.log(itemOne);
+  console.log(itemTwo);
+
+  return (
+    <>
+      <Doughnut data={data} options={options} />
+    </>
+  );
 }
