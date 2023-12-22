@@ -225,7 +225,7 @@ const ProductInputForm = ({ ordenes }) => {
         </form>
       </div>
       <div
-        className={`bg-gray-100 p-6 rounded-lg shadow-md w-sm mt-3 none ${display} flex justify-center`}
+        className={`m-auto bg-gray-100 p-6 rounded-lg shadow-md w-100 mt-3 sm:w-full none md:max-w-md ${display} flex justify-center`}
       >
         <LinesChart itemOne={item1} itemTwo={item2} />
       </div>
