@@ -9,6 +9,7 @@ import { productoMasVendidoConInformacion } from "../Funciones/productoMasVendid
 import { encontrarProductoMasVendido } from "../Funciones/encontrarProductoMasVendido";
 import { agruparOrdenes } from "../Funciones/agruparOrdenes";
 import Swal from "sweetalert2";
+import BarChart from "../Graficas/BarChart";
 
 const ProductoMasVendido = ({ ordenes }) => {
   const alert = () => {
@@ -54,6 +55,7 @@ const ProductoMasVendido = ({ ordenes }) => {
   );
 
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
+  const [display, setDisplay] = useState("hidden");
 
   const traerDatos = (ordenes, mes) => {
     let newArray = [];
@@ -167,6 +169,15 @@ const ProductoMasVendido = ({ ordenes }) => {
           FechaMesActual.fechaFin
         );
         return newArray;
+      case "diciembre":
+        FechaMesActual = obtenerFechasDelMes(12);
+        newArray = filtrarProductos(
+          ordenes,
+          "",
+          FechaMesActual.fechaInicio,
+          FechaMesActual.fechaFin
+        );
+        return newArray;
     }
   };
 
@@ -174,6 +185,7 @@ const ProductoMasVendido = ({ ordenes }) => {
   let FechaMesActual = obtenerFechasDelMes(MesActual);
   let productos = [];
   let productoMasVendido = {};
+  const [ordenesGrafica, setOrdenesGrafica] = useState([]);
 
   const handleMonthChange = (event) => {
     setSelectedMonth(event.target.value);
@@ -184,68 +196,77 @@ const ProductoMasVendido = ({ ordenes }) => {
   /* const { nombre, cantidad, descripcion, imagen } = productoMasVendido; */
 
   return (
-    <div className="bg-gray-100 p-6 rounded-lg shadow-md">
-      <div className="mb-4">
-        <label htmlFor="monthSelect" className="text-sm font-semibold">
-          Mes:
-        </label>
-        <select
-          name="monthSelect"
-          id="monthSelect"
-          className="block w-full p-2 mt-1 border rounded-md bg-white focus:outline-none focus:ring focus:border-blue-300"
-          value={selectedMonth}
-          onChange={handleMonthChange}
-        >
-          {months.map((month) => (
-            <option key={month} value={month}>
-              {month}
-            </option>
-          ))}
-        </select>
-      </div>
-      <h2 className={`text-2xl font-bold mb-4  ${isActive}`}>
-        Producto Más Vendido
-      </h2>
-      <div className="flex items-center mb-4">
-        <img
-          src={imagen}
-          alt="Producto Más Vendido"
-          className={`w-16 h-16 object-cover rounded-full ${isActive}`}
-        />
-        <div className={`ml-4 ${isActive}`}>
-          <p className="text-lg font-semibold">{nombre}</p>
-          <p className="text-gray-600">{descripcion}</p>
+    <>
+      <div className="bg-gray-100 p-6 rounded-lg shadow-md">
+        <div className="mb-4">
+          <label htmlFor="monthSelect" className="text-sm font-semibold">
+            Mes:
+          </label>
+          <select
+            name="monthSelect"
+            id="monthSelect"
+            className="block w-full p-2 mt-1 border rounded-md bg-white focus:outline-none focus:ring focus:border-blue-300"
+            value={selectedMonth}
+            onChange={handleMonthChange}
+          >
+            {months.map((month) => (
+              <option key={month} value={month}>
+                {month}
+              </option>
+            ))}
+          </select>
+        </div>
+        <h2 className={`text-2xl font-bold mb-4  ${isActive}`}>
+          Producto Más Vendido
+        </h2>
+        <div className="flex items-center mb-4">
+          <img
+            src={imagen}
+            alt="Producto Más Vendido"
+            className={`w-16 h-16 object-cover rounded-full ${isActive}`}
+          />
+          <div className={`ml-4 ${isActive}`}>
+            <p className="text-lg font-semibold">{nombre}</p>
+            <p className="text-gray-600">{descripcion}</p>
+          </div>
+        </div>
+        <div className="flex justify-between items-center">
+          <p className={`text-lg font-semibold ${isActive}`}>
+            Vendido en {selectedMonth.toUpperCase()}:{" "}
+            <span className="text-green-500">{cantidad} unidades</span>
+          </p>
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={() => {
+              productos = traerDatos(ordenes, selectedMonth);
+              setOrdenesGrafica(productos);
+              productoMasVendido = encontrarProductoMasVendido(productos);
+
+              setImagen(productoMasVendido?.imagen);
+              setNombre(productoMasVendido?.nombre);
+              setDescripcion(productoMasVendido?.descripcion);
+              setCantidad(productoMasVendido?.cantidad);
+              setIsActive("");
+              setDisplay("block");
+              console.log(selectedMonth);
+              console.log(productos);
+              console.log(FechaMesActual);
+              console.log(productoMasVendido);
+              if (productoMasVendido === null) {
+                alert();
+              }
+            }}
+          >
+            Consultar
+          </button>
         </div>
       </div>
-      <div className="flex justify-between items-center">
-        <p className={`text-lg font-semibold ${isActive}`}>
-          Vendido en {selectedMonth.toUpperCase()}:{" "}
-          <span className="text-green-500">{cantidad} unidades</span>
-        </p>
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={() => {
-            productos = traerDatos(ordenes, selectedMonth);
-            productoMasVendido = encontrarProductoMasVendido(productos);
-
-            setImagen(productoMasVendido?.imagen);
-            setNombre(productoMasVendido?.nombre);
-            setDescripcion(productoMasVendido?.descripcion);
-            setCantidad(productoMasVendido?.cantidad);
-            setIsActive("");
-            console.log(selectedMonth);
-            console.log(productos);
-            console.log(FechaMesActual);
-            console.log(productoMasVendido);
-            if (productoMasVendido === null) {
-              alert();
-            }
-          }}
-        >
-          Consultar
-        </button>
+      <div
+        className={`m-auto bg-gray-100 p-6 rounded-lg shadow-md w-100 mt-3 none md:max-w-2xl ${display} flex justify-center`}
+      >
+        <BarChart ordenes={ordenesGrafica}></BarChart>
       </div>
-    </div>
+    </>
   );
 };
 
