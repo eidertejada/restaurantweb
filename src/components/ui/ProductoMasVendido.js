@@ -61,6 +61,14 @@ const ProductoMasVendido = ({ ordenes }) => {
     let newArray = [];
     let FechaMesActual = {};
     switch (mes) {
+      case "Noviembre-2023":
+        FechaMesActual = obtenerFechasDelMes(1);
+        newArray = filtrarProductos(ordenes, "", "11/01/2023", "11/31/2023");
+        return newArray;
+      case "Diciembre-2023":
+        FechaMesActual = obtenerFechasDelMes(1);
+        newArray = filtrarProductos(ordenes, "", "12/01/2023", "12/31/2023");
+        return newArray;
       case "Enero":
         FechaMesActual = obtenerFechasDelMes(1);
         newArray = filtrarProductos(
@@ -209,6 +217,12 @@ const ProductoMasVendido = ({ ordenes }) => {
             value={selectedMonth}
             onChange={handleMonthChange}
           >
+            <option key={"Noviembre-2023"} value="Noviembre-2023">
+              Noviembre-2023
+            </option>
+            <option key={"Diciembre-2023"} value="Diciembre-2023">
+              Diciembre-2023
+            </option>
             {months.map((month) => (
               <option key={month} value={month}>
                 {month}
@@ -248,6 +262,7 @@ const ProductoMasVendido = ({ ordenes }) => {
               setCantidad(productoMasVendido?.cantidad);
               setIsActive("");
               setDisplay("block");
+              console.log(ordenes);
               console.log(selectedMonth);
               console.log(productos);
               console.log(FechaMesActual);
