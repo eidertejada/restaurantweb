@@ -67,6 +67,7 @@ const Orden = ({ orden }) => {
         <h1 className="text-yellow-600 text-lg font-bold">
           {orden.usuario ? `Usuario: ${orden.usuario}` : orden.id}
         </h1>
+        <h2>{orden.creado}</h2>
         {orden.orden.map((platillos) => (
           <p className="text-gray-600">
             {platillos.cantidad} {platillos.nombre}

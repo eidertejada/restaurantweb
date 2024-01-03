@@ -268,6 +268,7 @@ const ProductoMasVendido = ({ ordenes }) => {
               console.log(FechaMesActual);
               console.log(productoMasVendido);
               if (productoMasVendido === null) {
+                setDisplay("hidden");
                 alert();
               }
             }}
