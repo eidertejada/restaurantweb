@@ -54,7 +54,7 @@ const ProductoMasVendido = ({ ordenes }) => {
     "Deliciosa Pizza De Doble queso"
   );
 
-  const [selectedMonth, setSelectedMonth] = useState(currentMonth);
+  const [selectedMonth, setSelectedMonth] = useState("Noviembre-2023");
   const [display, setDisplay] = useState("hidden");
 
   const traerDatos = (ordenes, mes) => {

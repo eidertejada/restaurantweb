@@ -2,7 +2,7 @@ export function agruparOrdenes(ventas) {
   const ordenesAgrupadas = {};
 
   // Iterar sobre el array de ventas
-  ventas.forEach((orden) => {
+  ventas?.forEach((orden) => {
     const clave = `${orden.categoria}-${orden.nombre}-${orden.precio}`;
 
     // Verificar si la orden ya está en el nuevo array
