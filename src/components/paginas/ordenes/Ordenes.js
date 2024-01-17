@@ -1,10 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
-import { FirebaseContext } from "../../firebase";
-import Orden from "../ui/Orden";
+import { FirebaseContext } from "../../../firebase";
+import Orden from "../../ui/Orden";
+import { getAuth } from "firebase/auth";
 
 const Ordenes = () => {
   // Context con las operaciones de firebase
   const { firebase } = useContext(FirebaseContext);
+  const auth = getAuth();
+  const user = auth.currentUser;
+  console.log(user);
 
   // state con las ordenes
   const [ordenes, guardarOrdenes] = useState([]);

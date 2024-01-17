@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { FirebaseContext } from "../../firebase";
-import Platillo from "../ui/Platillo";
+import { FirebaseContext } from "../../../firebase";
+import Platillo from "../../ui/Platillo";
 
 const Menu = () => {
   // Definir el state
