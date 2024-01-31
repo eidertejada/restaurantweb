@@ -4,12 +4,11 @@ import firebase, { FirebaseContext } from "./firebase";
 import { getAuth } from "firebase/auth";
 import Ordenes from "./components/paginas/ordenes";
 import Menu from "./components/paginas/menu";
-import NuevoPlatillo from "./components/paginas/NuevoPlatillo";
+import NuevoPlatillo from "./components/paginas/nuevoPlatillo";
 import Sidebar from "./components/ui/Sidebar";
-import OrdenesCompletadas from "./components/paginas/OrdenesCompletadas";
-import Reportes from "./components/paginas/Reportes";
+import OrdenesCompletadas from "./components/paginas/ordenesCompletadas";
+import Reportes from "./components/paginas/reportes";
 import Login from "./components/paginas/login";
-
 
 function App() {
   const auth = getAuth();
@@ -54,7 +53,13 @@ function App() {
             ></Route>
             <Route
               path="/ordenes-completadas"
-              element={user?.email === "administracion@user.com" ? <OrdenesCompletadas /> : <Navigate to="/ordenes" />}
+              element={
+                user?.email === "administracion@user.com" ? (
+                  <OrdenesCompletadas />
+                ) : (
+                  <Navigate to="/ordenes" />
+                )
+              }
             ></Route>
             <Route
               path="/reportes"

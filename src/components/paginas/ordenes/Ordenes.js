@@ -8,7 +8,6 @@ const Ordenes = () => {
   const { firebase } = useContext(FirebaseContext);
   const auth = getAuth();
   const user = auth.currentUser;
-  console.log(user);
 
   // state con las ordenes
   const [ordenes, guardarOrdenes] = useState([]);

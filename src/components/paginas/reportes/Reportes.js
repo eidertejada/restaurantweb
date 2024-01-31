@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import ProductoMasVendido from "../ui/ProductoMasVendido";
-import { FirebaseContext } from "../../firebase";
-import SelectComponent from "../ui/SelectComponent";
-import DateRangePicker from "../ui/DateRangePicker";
-import ProductInputForm from "../ui/ProductInputForm";
+import ProductoMasVendido from "../../ui/ProductoMasVendido";
+import { FirebaseContext } from "../../../firebase";
+import SelectComponent from "../../ui/SelectComponent";
+import DateRangePicker from "../../ui/DateRangePicker";
+import ProductInputForm from "../../ui/ProductInputForm";
 
 const Reportes = () => {
   const { firebase } = useContext(FirebaseContext);

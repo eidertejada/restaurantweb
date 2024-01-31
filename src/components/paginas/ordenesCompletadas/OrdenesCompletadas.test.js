@@ -3,9 +3,9 @@ import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import "@testing-library/jest-dom/extend-expect";
 import firebase, { FirebaseContext } from "../../../firebase";
-import Menu from "./Menu";
+import OrdenesCompletadas from "./OrdenesCompletadas";
 
-test("Muestra la lista del menu", () => {
+test("Muestra las ordenes completadas que fueron realizadas", () => {
   render(
     <FirebaseContext.Provider
       value={{
@@ -13,12 +13,12 @@ test("Muestra la lista del menu", () => {
       }}
     >
       <BrowserRouter>
-        <Menu />
+        <OrdenesCompletadas />
       </BrowserRouter>
     </FirebaseContext.Provider>
   );
 
-  const text = screen.getByText("Agregar Platillo");
+  const text = screen.getByText("Ordenes Completadas");
 
-  expect(text).toHaveTextContent("Agregar Platillo");
+  expect(text).toHaveTextContent("Ordenes Completadas");
 });

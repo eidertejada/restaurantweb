@@ -11,6 +11,7 @@ import { agruparOrdenes } from "../Funciones/agruparOrdenes";
 import Swal from "sweetalert2";
 import BarChart from "../Graficas/BarChart";
 
+
 const ProductoMasVendido = ({ ordenes }) => {
   const alert = () => {
     setIsActive("text-gray-500 opacity-50");

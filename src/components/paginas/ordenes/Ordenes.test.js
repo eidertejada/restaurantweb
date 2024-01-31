@@ -5,7 +5,7 @@ import '@testing-library/jest-dom/extend-expect'
 import firebase, { FirebaseContext } from "../../../firebase";
 import Ordenes from "./Ordenes";
 
-it('should show orders view', () => {
+test('Muestra las ordenes que llegan en tiempo real', () => {
     render (
         <FirebaseContext.Provider
             value={{

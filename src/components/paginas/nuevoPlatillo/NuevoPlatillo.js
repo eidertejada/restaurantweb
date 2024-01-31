@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { FirebaseContext } from "../../firebase";
+import { FirebaseContext } from "../../../firebase";
 import { useNavigate } from "react-router-dom";
 import FileUploader from "react-firebase-file-uploader";
 

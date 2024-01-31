@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
-import { FirebaseContext } from "../../firebase";
-import Orden from "../ui/Orden";
+import { FirebaseContext } from "../../../firebase";
+import Orden from "../../ui/Orden";
 
 const OrdenesCompletadas = () => {
   // Context con las operaciones de firebase

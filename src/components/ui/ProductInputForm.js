@@ -1,13 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { filtrarProductos } from "../Funciones/filtrarProductos";
 import { formatearFecha } from "../Funciones/formatearFecha";
 import LinesChart from "../Graficas/LinesChart";
 import { traerProducto } from "../Funciones/traerProducto";
 import Swal from "sweetalert2";
+import { FirebaseContext } from "../../firebase";
 
 const ProductInputForm = ({ ordenes }) => {
-  const [productName1, setProductName1] = useState("");
-  const [productName2, setProductName2] = useState("");
+  const { firebase } = useContext(FirebaseContext);
+  useEffect(() => {
+    const obtenerOrdenes = async () => {
+      await firebase.db
+        .collection("productos")
+        .where("existencia", "==", true)
+        .onSnapshot(manejarSnapshot);
+    };
+    obtenerOrdenes();
+  }, []);
+
+  async function manejarSnapshot(snapshot) {
+    const productos = snapshot.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      };
+    });
+
+    setProductos(productos);
+
+    console.log(productos);
+  }
+
+  const [productos, setProductos] = useState([]);
+  const [productName1, setProductName1] = useState("-- Seleccione --");
+  const [productName2, setProductName2] = useState("-- Seleccione --");
   const [date1Product1, setDate1Product1] = useState("");
   const [date2Product1, setDate2Product1] = useState("");
   const [date1Product2, setDate1Product2] = useState("");
@@ -20,12 +46,29 @@ const ProductInputForm = ({ ordenes }) => {
   let productsOne = [];
   let productsTwo = [];
 
+  const handleProductNameOneChange = (event) => {
+    setProductName1(event.target.value);
+  };
+
+  const handleProductNameTwoChange = (event) => {
+    setProductName2(event.target.value);
+  };
+
   const alert = (item) => {
     Swal.fire({
       icon: "error",
       title: "Error",
       text: `El producto: ${item} no se encuentra en el periodo indicado`,
       footer: '<a href="#">No existe producto vendido en este periodo</a>',
+    });
+  };
+
+  const alertOne = () => {
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: `Debes seleccionar un producto`,
+      footer: '<a href="#">Selecciona un producto para poder comparar</a>',
     });
   };
 
@@ -89,17 +132,14 @@ const ProductInputForm = ({ ordenes }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    setDisplay("block");
-
-    // Puedes hacer algo con los datos aquí, como enviarlos a un servidor o realizar otra lógica.
-
-    /*     // Reiniciar los valores después de enviar o procesar
-    setProductName1("");
-    setProductName2("");
-    setDate1Product1("");
-    setDate2Product1("");
-    setDate1Product2("");
-    setDate2Product2(""); */
+    if (
+      productName1 === "-- Seleccione --" ||
+      productName2 === "-- Seleccione --"
+    ) {
+      setDisplay("hidden");
+    } else {
+      setDisplay("block");
+    }
   };
 
   return (
@@ -108,21 +148,31 @@ const ProductInputForm = ({ ordenes }) => {
         <h2 className="text-2xl font-bold mb-4">Estadistica de Ventas</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label
-              htmlFor="productName1"
-              className="block text-sm font-semibold mb-2"
-            >
-              Nombre del Producto 1:
-            </label>
-            <input
-              required
-              type="text"
-              id="productName1"
-              name="productName1"
-              value={productName1}
-              onChange={handleInputChange}
-              className="w-full p-2 border rounded-md bg-white focus:outline-none focus:ring focus:border-blue-300"
-            />
+            <div className="mb-4">
+              <label
+                htmlFor="productOneSelect"
+                className="text-sm font-semibold"
+              >
+                Nombre del Producto 1:
+              </label>
+
+              <select
+                name="productOneSelect"
+                id="productOneSelect"
+                className="block w-full p-2 mt-1 border rounded-md bg-white focus:outline-none focus:ring focus:border-blue-300"
+                value={productName1}
+                onChange={handleProductNameOneChange}
+              >
+                <option value={"-- Seleccione --"} key={"-- Seleccione --"}>
+                  -- Seleccione --
+                </option>
+                {productos.map((producto) => (
+                  <option key={producto.nombre} value={producto.nombre}>
+                    {producto.nombre}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
           <div className="mb-4">
             <label
@@ -157,21 +207,26 @@ const ProductInputForm = ({ ordenes }) => {
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="productName2"
-              className="block text-sm font-semibold mb-2"
-            >
+            <label htmlFor="productTwoSelect" className="text-sm font-semibold">
               Nombre del Producto 2:
             </label>
-            <input
-              required
-              type="text"
-              id="productName2"
-              name="productName2"
+
+            <select
+              name="productTwoSelect"
+              id="productTwoSelect"
+              className="block w-full p-2 mt-1 border rounded-md bg-white focus:outline-none focus:ring focus:border-blue-300"
               value={productName2}
-              onChange={handleInputChange}
-              className="w-full p-2 border rounded-md bg-white focus:outline-none focus:ring focus:border-blue-300"
-            />
+              onChange={handleProductNameTwoChange}
+            >
+              <option value={"Hola"} key={"Hola"}>
+                -- Seleccione --
+              </option>
+              {productos.map((producto) => (
+                <option key={producto.nombre} value={producto.nombre}>
+                  {producto.nombre}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="mb-4">
             <label
@@ -211,7 +266,15 @@ const ProductInputForm = ({ ordenes }) => {
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               onClick={() => {
                 console.log(ordenes);
-                traerDatos();
+                if (
+                  productName1 === "-- Seleccione --" ||
+                  productName2 === "-- Seleccione --"
+                ) {
+                  alertOne();
+                } else {
+                  traerDatos();
+                }
+
                 console.log(productsOne);
                 console.log(productsTwo);
 

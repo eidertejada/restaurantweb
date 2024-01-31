@@ -3,9 +3,9 @@ import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import "@testing-library/jest-dom/extend-expect";
 import firebase, { FirebaseContext } from "../../../firebase";
-import Menu from "./Menu";
+import Login from "./Login";
 
-test("Muestra la lista del menu", () => {
+test("Permite ingresar el email y contraseña para el inicio de sesión", () => {
   render(
     <FirebaseContext.Provider
       value={{
@@ -13,12 +13,12 @@ test("Muestra la lista del menu", () => {
       }}
     >
       <BrowserRouter>
-        <Menu />
+        <Login />
       </BrowserRouter>
     </FirebaseContext.Provider>
   );
 
-  const text = screen.getByText("Agregar Platillo");
+  const textEmail = screen.getByText("Correo Electrónico");
 
-  expect(text).toHaveTextContent("Agregar Platillo");
+  expect(textEmail).toHaveTextContent("Correo Electrónico");
 });
