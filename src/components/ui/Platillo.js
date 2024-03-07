@@ -74,21 +74,12 @@ const Platillo = ({ platillo }) => {
                   <option value="true">Disponible</option>
                   <option value="false">No Disponible</option>
                 </select>
-                <button
-                  type="button"
-                  className="bg-red-600 hover:bg-red-500 w-full mt-5 p-2 text-white uppercase font-bold"
-                  onClick={() => {
-                    alerta();
-                  }}
-                >
-                  Eliminar Producto
-                </button>
               </label>
             </div>
           </div>
 
           <div className="lg:w-7/12 xl:9/12 pl-5">
-            <p className="font-bold text-2xl text-yellow-600 mb-4">{nombre}</p>
+            <p className="font-bold text-2xl text-yellow-600 mb-4 mt-5 md:mt-1">{nombre}</p>
             <p className="text-gray-600 mb-4">
               Categorias:
               <span className="text-gray-700 font-bold">
@@ -102,6 +93,17 @@ const Platillo = ({ platillo }) => {
               <span className="text-gray-700 font-bold"> ${precio}</span>
             </p>
           </div>
+        </div>
+        <div className=" md:w-[50%] lg:w-[30%] w-full">
+          <button
+            type="button"
+            className="bg-red-600 hover:bg-red-500 w-full mt-5 p-2 text-white uppercase font-bold"
+            onClick={() => {
+              alerta();
+            }}
+          >
+            Eliminar Producto
+          </button>
         </div>
       </div>
     </div>

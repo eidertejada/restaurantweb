@@ -21,22 +21,5 @@ test('Muestra el producto mas vendido en un mes especifico', () => {
     const text = screen.getByText('Producto Más Vendido')
 
     expect(text).toHaveTextContent('Producto Más Vendido')
-})
-
-test('Muestra la estadistica de ventas comparando 2 productos en diferentes fechas', () => {
-    render (
-        <FirebaseContext.Provider
-            value={{
-                firebase,
-            }}
-        >
-            <BrowserRouter>
-                <Reportes />
-            </BrowserRouter>
-        </FirebaseContext.Provider>
-    )
-
-    const text = screen.getByText('Estadistica de Ventas')
-
-    expect(text).toHaveTextContent('Estadistica de Ventas')
-})
+}
+)

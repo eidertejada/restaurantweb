@@ -3,6 +3,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import logo from "../../assets/icon.png"
 const Sidebar = () => {
   const urlActual = useLocation().pathname;
   const auth = getAuth();
@@ -11,8 +12,9 @@ const Sidebar = () => {
   return (
     <div className="md:w-2/5 xl:w-1/5 bg-gray-800">
       <div className="p-6">
-        <p className="uppercase text-white text-2xl text-center font-bold tracking-wide">
-          RestaurantApp
+        <img src={logo} alt="logo" className="w-[60%] m-auto mb-2" />
+        <p className="uppercase text-white text-xl text-center font-bold tracking-wide">
+          FCA Restaurant
         </p>
 
         <p className="mt-3 text-gray-600">
