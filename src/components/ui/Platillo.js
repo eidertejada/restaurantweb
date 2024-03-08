@@ -60,7 +60,7 @@ const Platillo = ({ platillo }) => {
       <div className="p-5 shadow-md bg-white">
         <div className="lg:flex">
           <div className="lg:w-5/12 xl:3/12">
-            <img src={imagen} alt="platillo" className="h-60 w-full" />
+            <img src={imagen} alt="platillo" className="h-60 w-full rounded-md" />
             <div className="sm:flex sm:-mx-2 pl-3">
               <label className="block mt-5 sm:w-2/4">
                 <span className="block text-gray-800 mb-2">Existencia</span>
